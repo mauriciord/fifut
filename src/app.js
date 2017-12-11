@@ -7,17 +7,16 @@ class App extends Component {
   constructor () {
     super()
     this.state = {
-      data: []
+      data: [],
+      inputText: ''
     }
   }
 
-  handleSearch = (e) => {
-    e.preventDefault()
-
-    axios.get(`https://thcm-cors.herokuapp.com/https://www.easports.com/br/fifa/ultimate-team/api/fut/item?jsonParamObject={"name":"${e.target.search.value}}"`)
+  handleSearch = (event) => {
+    event.preventDefault()
+    axios.get(`https://thcm-cors.herokuapp.com/https://www.easports.com/br/fifa/ultimate-team/api/fut/item?jsonParamObject={"name":"${this.state.inputText}}"`)
       .then(res => this.setState({ data: res.data.items }))
 
-    e.target.search.value = ''
   }
 
   renderItems = () => {
@@ -38,6 +37,8 @@ class App extends Component {
               type='text'
               placeholder='Digite sua pesquisa e pressione enter'
               name='search'
+              value={this.state.inputText}
+              onChange={(event) => this.setState({ inputText: event.target.value })}
             />
           </form>
         </div>
